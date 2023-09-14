@@ -1,14 +1,69 @@
+
 import "./App.css";
 import List from "./components/BottomSection/List";
 import Container from "./components/Container/Container";
 import InputTask from "./components/MiddleSection/InputTask";
 import TopSection from "./components/TopSection/TopSection";
+import { v4 as uuidv4 } from 'uuid';
+import { FormEvent, useState } from "react";
+// the FormEvent is from the typescript.
+export interface intfTodo {
+  name: string;
+  done: boolean;
+  id: string;
+}
+
+const demoTodo = [
+  {
+    name: "task one",
+    done: false,
+    id: uuidv4(),
+  },
+  {
+    name: "task two",
+    done: true,
+    id: uuidv4(),
+  },
+];
+
+
+
 
 const App = () => {
+
+  const[todos,setTodos]= useState<intfTodo[]>([])
+
+
+  const handleSubmitTodo = (e: FormEvent<HTMLFormElement>, value: string) => {
+    e.preventDefault();
+    const newTodo = {
+      name: value,
+      done: false,
+      id: uuidv4(),
+    };
+    setTodos((todos) => [...todos, newTodo]);
+  };
+
+  const toggleDoneTodo = (id: string, done: boolean) => {
+    setTodos((todos) =>
+      todos.map((t) => {
+        if (t.id === id) {
+          t.done = done;
+        }
+        return t;
+      })
+    );
+  };
+
+  const handleDeleteTodo = (id: string) => {
+    setTodos((todos) => todos.filter((t) => t.id !== id));
+  };
+
+
   return (
     <div className="flex justify-center h-full w-full   ">
       <img
-        className="absolute inset-0 w-screen  md:max-h-full h-screen object-cover object-center opacity-80 overflow-hidden "
+        className="absolute inset-0  h-full w-screen object-cover object-center opacity-80 overflow-hidden "
         src="mountain.jpg"
         alt="mountain image"
       />
@@ -23,16 +78,16 @@ const App = () => {
 
         {/* structure */}
         <Container title="TopSection">
-          <TopSection />
+          <TopSection todos={todos} />
         </Container>
         <Container title="MiddleSection">
           {/* <MiddleSection/> */}
-          <InputTask />
+          <InputTask handleSubmit={handleSubmitTodo} />
         </Container>
 
         <Container title="BottomSection">
           {/* <BottomSection/> */}
-          <List />
+          <List todos={todos} toggleDone={toggleDoneTodo} handleDelete={handleDeleteTodo} />
         </Container>
       </div>
     </div>

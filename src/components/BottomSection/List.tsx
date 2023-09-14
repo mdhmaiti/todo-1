@@ -1,17 +1,18 @@
+import { intfTodo } from "@/App"
 import ListItem from "./ListItem"
 
 
-const List = () => {
+const List = ({todos}:{todos:intfTodo[]}) => {
+
+
   return (
     <div className="flex flex-col gap-2">
-      <ListItem />
-      <ListItem />
-      <ListItem />
-      <ListItem />
-      <ListItem />
-      <ListItem />
-      <ListItem />
-      <ListItem />
+      {todos.map((t)=>(
+        <ListItem key = {t.id} name={t.name}/>
+
+      ))}
+      
+      
     </div>
   )
 }
