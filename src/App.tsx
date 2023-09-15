@@ -13,23 +13,14 @@ export interface intfTodo {
   id: string;
 }
 
-const demoTodo = [
-  {
-    name: "task one",
-    done: false,
-    id: uuidv4(),
-  },
-  {
-    name: "task two",
-    done: true,
-    id: uuidv4(),
-  },
-];
 
 
 
 
 const App = () => {
+
+  //note here i am defining the states at the top level and passing the states as a property by drilling through the children components.
+  //here i have to first drill through the list and then to the list item to make it work .. here the state management library such as the recoil comes into picture .
 
   const[todos,setTodos]= useState<intfTodo[]>([])
 
@@ -44,16 +35,9 @@ const App = () => {
     setTodos((todos) => [...todos, newTodo]);
   };
 
-  const toggleDoneTodo = (id: string, done: boolean) => {
-    setTodos((todos) =>
-      todos.map((t) => {
-        if (t.id === id) {
-          t.done = done;
-        }
-        return t;
-      })
-    );
-  };
+ 
+    
+     
 
   const handleDeleteTodo = (id: string) => {
     setTodos((todos) => todos.filter((t) => t.id !== id));
@@ -87,7 +71,7 @@ const App = () => {
 
         <Container title="BottomSection">
           {/* <BottomSection/> */}
-          <List todos={todos} toggleDone={toggleDoneTodo} handleDelete={handleDeleteTodo} />
+          <List todos={todos}  handleDelete={handleDeleteTodo} />
         </Container>
       </div>
     </div>
