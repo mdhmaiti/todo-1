@@ -35,7 +35,17 @@ const App = () => {
     setTodos((todos) => [...todos, newTodo]);
   };
 
- 
+  const toggleDoneTodo = (id: string, done: boolean) => {
+    setTodos((todos) =>
+      todos.map((t) => {
+        if (t.id === id) {
+          t.done = done;
+        }
+        return t;
+      })
+    );
+  };
+
     
      
 
@@ -71,7 +81,7 @@ const App = () => {
 
         <Container title="BottomSection">
           {/* <BottomSection/> */}
-          <List todos={todos}  handleDelete={handleDeleteTodo} />
+          <List todos={todos}   toggleDone={toggleDoneTodo} handleDelete={handleDeleteTodo} />
         </Container>
       </div>
     </div>

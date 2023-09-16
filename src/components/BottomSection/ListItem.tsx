@@ -2,27 +2,30 @@
 
 
 //import { useState } from "react";
+
 import { Button } from "../ui/button"
 import { Checkbox } from "../ui/checkbox"
 
 
 // here the list items is the todos 
 
-const ListItem = ({name,
+const ListItem = ({name,done,
   id,
-  
-  handleDelete,}:{ name: string; done: boolean;
+  toggleDone,
+  handleDelete,} : { name: string; done: boolean;
     id: string;
-    
+    toggleDone: (id: string, done: boolean) => void|boolean;
     handleDelete: (id: string) => void;
   }) => {
 
-
+    // const [done, setDone] = useState(false);
   return (
     <div className="flex flex-row justify-between ">
         <div className="flex flex-row gap-x-4">
-            <Checkbox  />
-           
+
+          {/* on change does not work on check box properly use the on checked change function */}
+            <Checkbox  checked={done}  onCheckedChange={() => toggleDone(id, !done)}/>
+            
             
             <h1 className =" relative -top-1 ">{name} </h1>
         </div>
